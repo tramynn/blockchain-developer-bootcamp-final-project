@@ -33,9 +33,29 @@ contract DevDoggieToken is ERC721, ReentrancyGuard, Ownable {
     // @notice The last name of the devdoggie
     mapping(uint256 => string) devDoggieLastNames;
 
-    /* EVENTS */
-    event AdoptedDevDoggie(address indexed buyer, uint256 devDoggieId);
+    // @notice This creates a public variable to store all the devdoggies of the owner
+    // @dev This is an array of devdoggies struct
+    mapping (uint256 => DevDoggie) public adoptedDevDoggies;
 
+    // DevDoggie[] public myDevDoggies;
+
+    struct DevDoggie {
+        // uint devDoggieId;
+        // address nftContract;
+        uint256 tokenId;
+        address owner;
+        uint256 devDoggieType;
+        string firstName;
+        string lastName;
+    }
+
+    /* EVENTS */
+    event DevDoggieAdopted(address indexed buyer, uint256 devDoggieId);
+
+    modifier isOwner (address _owner) {
+        require( msg.sender == _owner, "Owner must be the same as the message sender." );
+        _;
+    }
 
     constructor(address marketplaceAddress) ERC721("DevDoggieToken", "TARO") {
         contractAddress = marketplaceAddress;
@@ -49,11 +69,13 @@ contract DevDoggieToken is ERC721, ReentrancyGuard, Ownable {
     // @param _lastName The last name of the devdoggie token
     // @return Returns the devDoggieId of uint256
     function adoptDevDoggie (
-        // uint256 _devDoggieType
-        string memory _firstName
+        uint256 _devDoggieType
+        , string memory _firstName
         , string memory _lastName
     )
-        public returns (uint256)
+        public
+        payable
+        returns (uint256)
         {
             // Converts firstName and lastName to bytes
             bytes memory _firstNameBytes = bytes(_firstName);
@@ -64,7 +86,7 @@ contract DevDoggieToken is ERC721, ReentrancyGuard, Ownable {
             require(_lastNameBytes.length >= NAME_MIN_LENGTH, "Last name is too short.");
             require(_lastNameBytes.length >= NAME_MAX_LENGTH, "Last name is too long.");
 
-            // require(msg.value >= currentAdoptionFee, "Amount of Ether sent too small.");
+            require(msg.value >= currentAdoptionFee, "Amount of Ether sent too small.");
 
             // Updates tokenIds count
             _tokenIds.increment();
@@ -73,20 +95,66 @@ contract DevDoggieToken is ERC721, ReentrancyGuard, Ownable {
             uint256 newDevDoggieId = _tokenIds.current();
             _mint(msg.sender, newDevDoggieId);
 
+            // Adds properties of new devdoggie that made the call to the adoptedDevDoggies array
+            adoptedDevDoggies[newDevDoggieId] = DevDoggie( {
+                tokenId: newDevDoggieId
+                , owner: msg.sender
+                , devDoggieType: _devDoggieType
+                , firstName: _firstName
+                , lastName: _lastName
+            } );
+
             return newDevDoggieId;
 
-            // emit AdoptedDevDoggie(msg.sender, newDevDoggieId);
+            emit DevDoggieAdopted(msg.sender, newDevDoggieId);
         }
 
-    // function getMyDevDoggies()
-    //     external
-    //     view
-    //     returns (uint256[])
-    //     {
-    //         return ownedDevDoggies[msg.sender];
-    //     }
+    // @notice Returns all the devdoggie tokens the user owns
+    // @return An array of token indices
+    function getMyDevDoggies()
+        public
+        view
+        returns (DevDoggie[] memory)
+        {
+            uint totalDevDoggieCount = _tokenIds.current();
+            // uint devDoggieCount = 0;
+            // uint currentIndex = 0;
 
-    function getDevDoggie(uint256 _devDoggieId)
+            // for (uint i = 0; i < totalDevDoggieCount; i++) {
+            //     if (adoptedDevDoggies[i + 1].owner == msg.sender) {
+            //         devDoggieCount += 1;
+            //     }
+            // }
+
+            DevDoggie[] memory devDoggies = new DevDoggie[](devDoggieCount);
+            for (uint i = 0; i < totalDevDoggieCount; i++) {
+                if (adoptedDevDoggies[i + 1].owner == msg.sender) {
+                    uint currentId = i + 1;
+                    DevDoggie storage currentDevDoggie = DevDoggie[currentId];
+                    devDoggies[currentIndex] = currentDevDoggie;
+                    currentIndex += 1;
+                }
+            }
+            // return devDoggies;
+            // DevDoggie[] storage myDevDoggies;
+            // for (uint i = 0; i < totalDevDoggieCount; i++) {
+            //     if (adoptedDevDoggies[i + 1].owner == msg.sender) {
+            //         uint currentId = i + 1;
+            //         // DevDoggie storage currentDevDoggie = DevDoggie[currentId];
+            //         myDevDoggies.push(DevDoggie({
+            //             tokenId: adoptedDevDoggies[currentId].tokenId
+            //             , owner: adoptedDevDoggies[currentId].owner
+            //             , devDoggieType: adoptedDevDoggies[currentId].devDoggieType
+            //             , firstName: adoptedDevDoggies[currentId].firstName
+            //             , lastName: adoptedDevDoggies[currentId].lastName
+            //         }));
+            //     }
+            // }
+            return myDevDoggies;
+        }
+    // @notice Returns the information about a specific devdoggie token
+    // @param _tokenId The ID of the devdoggie token
+    function getDevDoggie(uint256 _tokenId)
         external
         view
         returns (
@@ -95,9 +163,9 @@ contract DevDoggieToken is ERC721, ReentrancyGuard, Ownable {
             , string memory _devDoggieLastName
         )
         {
-            _devDoggieType = devDoggieTypes[_devDoggieId];
-            _devDoggieFirstName = devDoggieFirstNames[_devDoggieId];
-            _devDoggieLastName = devDoggieLastNames[_devDoggieId];
+            _devDoggieType = devDoggieTypes[_tokenId];
+            _devDoggieFirstName = devDoggieFirstNames[_tokenId];
+            _devDoggieLastName = devDoggieLastNames[_tokenId];
         }
 
     function getCurrentAdoptionFee()
