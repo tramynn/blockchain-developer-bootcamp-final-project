@@ -107,9 +107,9 @@ contract AdoptionCenter is ERC721, ReentrancyGuard, Ownable {
                 , lastName: _lastName
             } );
 
-            return newDevDoggieId;
-
             emit DevDoggieAdopted(msg.sender, newDevDoggieId);
+
+            return newDevDoggieId;
         }
 
     // @notice Returns all the devdoggie tokens the user owns
@@ -133,7 +133,7 @@ contract AdoptionCenter is ERC721, ReentrancyGuard, Ownable {
             for (uint i = 0; i < totalDevDoggieCount; i++) {
                 if (adoptedDevDoggies[i + 1].owner == msg.sender) {
                     uint currentId = i + 1;
-                    DevDoggie storage currentDevDoggie = DevDoggie[currentId];
+                    DevDoggie storage currentDevDoggie = adoptedDevDoggies[currentId];
                     myDevDoggies[currentIndex] = currentDevDoggie;
                     currentIndex += 1;
                 }
