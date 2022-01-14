@@ -2,7 +2,7 @@ https://github.com/tramynn/blockchain-developer-bootcamp-final-project
 
 Please answer the following questions. Does your project:
 
-1. Follow this naming format: https://github.com/YOUR_GITHUB_USERNAME_HERE/blockchain-developer-bootcamp-final-project? YES/NO
+1. Follow this naming format: https://github.com/YOUR_GITHUB_USERNAME_HERE/blockchain-developer-bootcamp-final-project? YES
 
 2. Contain a README.md file which describes the project, describes the directory structure, and where the frontend project can be accessed? And has your public Ethereum address if you'd like your certification as an NFT (optional)? YES/NO
 
@@ -13,7 +13,7 @@ Please answer the following questions. Does your project:
 --Inherits from at least one library or interface
 --Can be easily compiled, migrated and tested? YES/NO
 
-4. Contain a Markdown file named design_pattern_decisions.md and avoiding_common_attacks.md? YES/NO
+4. Contain a Markdown file named design_pattern_decisions.md and avoiding_common_attacks.md? YES
 
 5. Have at least five smart contract unit tests that pass? YES/NO
 
