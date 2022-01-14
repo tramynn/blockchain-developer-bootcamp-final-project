@@ -10,7 +10,7 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 // @author Tramy N. Nguyen
 // @notice 
 // @dev 
-contract DevDoggieToken is ERC721, ReentrancyGuard, Ownable {
+contract AdoptionCenter is ERC721, ReentrancyGuard, Ownable {
 
     /* DATATYPES */
     using Counters for Counters.Counter;
@@ -75,6 +75,7 @@ contract DevDoggieToken is ERC721, ReentrancyGuard, Ownable {
     )
         public
         payable
+        nonReentrant
         returns (uint256)
         {
             // Converts firstName and lastName to bytes
