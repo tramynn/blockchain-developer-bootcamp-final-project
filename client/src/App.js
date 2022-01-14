@@ -59,7 +59,7 @@ const App = () => {
     const [ toastMessage, setToastMessage ] = useState( '' );
     console.log( 'toastMessage', toastMessage );
 
-    const metaMaskProps = {
+    const web3Props = {
         active
         , account
         , library
@@ -105,6 +105,12 @@ const App = () => {
             if ( chainId === 42 ) {
                 setToastType( 'success' );
                 setToastMessage( "Connected to MetaMask on Kovan test network." );
+                setTimeout( () => {
+                    setOpenToast( true );
+                }, 1000);
+            } else if ( chainId === 1337 ) {
+                setToastType( 'success' );
+                setToastMessage( "Connected to MetaMask on local test network." );
                 setTimeout( () => {
                     setOpenToast( true );
                 }, 1000);
@@ -190,7 +196,7 @@ const App = () => {
             <CssBaseline />
             <Navbar 
                 connectToMetaMask={ connectToMetaMask }
-                metaMaskProps={ metaMaskProps }
+                web3Props={ web3Props }
                 pending={ pending }
                 toastType={ toastType }
                 openToast={ openToast }
