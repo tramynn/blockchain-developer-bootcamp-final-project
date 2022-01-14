@@ -10,7 +10,7 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 // @author Tramy N. Nguyen
 // @notice 
 // @dev 
-contract AdoptionCenter is ERC721, ReentrancyGuard, Ownable {
+contract DevDoggieToken is ERC721, ReentrancyGuard, Ownable {
 
     /* DATATYPES */
     using Counters for Counters.Counter;
@@ -57,8 +57,7 @@ contract AdoptionCenter is ERC721, ReentrancyGuard, Ownable {
         _;
     }
 
-    constructor(address marketplaceAddress) ERC721("DevDoggieToken", "TARO") {
-        contractAddress = marketplaceAddress;
+    constructor() ERC721("DevDoggieToken", "TARO") {
     }
 
     // Requires the amount of Ether be at least or more of the currentPrice
