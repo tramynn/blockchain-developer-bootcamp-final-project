@@ -96,6 +96,8 @@ contract AdoptionCenter is ERC721, ReentrancyGuard, Ownable {
             uint256 newDevDoggieId = _tokenIds.current();
             _mint(msg.sender, newDevDoggieId);
 
+            // 
+
             // Adds properties of new devdoggie that made the call to the adoptedDevDoggies array
             adoptedDevDoggies[newDevDoggieId] = DevDoggie( {
                 tokenId: newDevDoggieId
@@ -118,21 +120,21 @@ contract AdoptionCenter is ERC721, ReentrancyGuard, Ownable {
         returns (DevDoggie[] memory)
         {
             uint totalDevDoggieCount = _tokenIds.current();
-            // uint devDoggieCount = 0;
-            // uint currentIndex = 0;
+            uint devDoggieCount = 0;
+            uint currentIndex = 0;
 
-            // for (uint i = 0; i < totalDevDoggieCount; i++) {
-            //     if (adoptedDevDoggies[i + 1].owner == msg.sender) {
-            //         devDoggieCount += 1;
-            //     }
-            // }
+            for (uint i = 0; i < totalDevDoggieCount; i++) {
+                if (adoptedDevDoggies[i + 1].owner == msg.sender) {
+                    devDoggieCount += 1;
+                }
+            }
 
-            DevDoggie[] memory devDoggies = new DevDoggie[](devDoggieCount);
+            DevDoggie[] memory myDevDoggies = new DevDoggie[](devDoggieCount);
             for (uint i = 0; i < totalDevDoggieCount; i++) {
                 if (adoptedDevDoggies[i + 1].owner == msg.sender) {
                     uint currentId = i + 1;
                     DevDoggie storage currentDevDoggie = DevDoggie[currentId];
-                    devDoggies[currentIndex] = currentDevDoggie;
+                    myDevDoggies[currentIndex] = currentDevDoggie;
                     currentIndex += 1;
                 }
             }
