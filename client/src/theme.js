@@ -102,7 +102,7 @@ const theme = createTheme({
                 , 'sans-serif'
             ].join( ',' )
             , color: '#fff'
-            , fontSize: '1.2rem'
+            , fontSize: '1.1rem'
             , fontWeight: 800
             , marginTop: '1rem'
             , marginBottom: '1rem'

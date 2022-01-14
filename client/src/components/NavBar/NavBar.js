@@ -15,6 +15,9 @@ import {
     , Snackbar
     , Alert as MuiAlert
     , AlertTitle
+    , Menu
+    , MenuItem
+    , Divider
 } from '@mui/material';
 import MoreVert from '@mui/icons-material/MoreVert';
 import { Link } from 'react-router-dom';
@@ -23,7 +26,7 @@ import { Hearts } from 'react-loader-spinner';
 
 // Component imports
 import StartButton from '../StartButton/StartButton';
-import InstallMetaMaskButton from '../InstallMetaMaskButton/InstallMetaMaskButton';
+import AccountDetailsButton from '../AccountDetailsButton/AccountDetailsButton';
 
 // Style import
 import {
@@ -45,13 +48,21 @@ const NavBar = ( {
     , openToast
     , handleToastClose
     , toastMessage
+    , disconnectMetaMask
 } ) => {
     const classes = useStyles();
     const [ openStartModal, setOpenStartModal ] = useState( false );
+    const [ anchorEl, setAnchorEl ] = useState( null );
+    const openAccountDetailsMenu = Boolean(anchorEl);
+
+    const handleOpenAccountDetailsMenu = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleAccountDetailsClose = () => {
+        setAnchorEl(null);
+    };
 
     // const [ openToast, setOpenToast ] = useState( false );
-    // const [ accounts, setAccounts ] = useState( null );
-    // const [ walletAddress, setWalletAddress ] = useState( null );
     // const [ contract, setContract ] = useState( null );
 
     const handleStartModalOpen = () => {
@@ -116,19 +127,22 @@ const NavBar = ( {
                                 direction="row"
                                 justifyContent="space-around"
                             >
-                                <Hidden mdUp>
+                                <Hidden smUp>
                                     <Grid
                                         item
                                         xs={12}
-                                        className={ classes.moreIcon }
+                                        classes={ { 
+                                            root: classes.moreIconContainer
+                                        } }
                                     >
-                                        <IconButton
+                                        Please Expand
+                                        {/* <IconButton
                                             color="inherit"
                                             aria-label="Account Menu"
                                             onClick={ handleStartModalOpen }
                                         >
                                             <MoreVert />
-                                        </IconButton>
+                                        </IconButton> */}
                                     </Grid>
                                 </Hidden>
                                 <Hidden smDown>
@@ -151,16 +165,104 @@ const NavBar = ( {
                                         xs={6}
                                         className={ classes.navBarLink }
                                     >
-                                        <div
-                                            onClick={ handleStartModalOpen }
-                                        >
-                                            {/* {
+                                            {
                                                 web3Props.active
-                                                    ? <StartButton handleStartModalOpen />
-                                                    : <InstallMetaMaskButton />
-                                            } */}
-                                            <StartButton handleStartModalOpen />
-                                        </div>
+                                                    ?
+                                                    <div
+                                                        onClick={ handleOpenAccountDetailsMenu }
+                                                    >
+                                                        <AccountDetailsButton 
+                                                            web3Props={ web3Props }
+                                                        />
+                                                    </div>
+                                                    :
+                                                    <div
+                                                        onClick={ handleStartModalOpen }
+                                                    >
+                                                        <StartButton handleStartModalOpen />
+                                                    </div>
+                                            }
+                                            <Menu
+                                                id="account-details-menu"
+                                                className={ classes.accountDetailsMenu }
+                                                anchorEl={anchorEl}
+                                                anchorOrigin={ { vertical: 'bottom', horizontal: 'right' } }
+                                                transformOrigin={ { vertical: 'top', horizontal: 'right' } }
+                                                open={ openAccountDetailsMenu }
+                                                onClose={ handleAccountDetailsClose }
+                                            >
+                                                <Grid
+                                                    container
+                                                    direction="column"
+                                                    // justifyContent="space-around"
+                                                    className={ classes.accountDetailsMenuList }
+                                                >
+                                                    <Grid 
+                                                        item
+                                                        classes={ {
+                                                            root: classes.startTitle
+                                                        } }
+                                                    >
+                                                        <Typography 
+                                                            variant="h4" 
+                                                            component="div"
+                                                            className={ classes.accountDetailsTitle }
+                                                        >
+                                                            Account Details
+                                                        </Typography>
+                                                    </Grid>
+                                                    <Grid 
+                                                        item
+                                                        classes={ {
+                                                            root: classes.accountMenuListItem
+                                                        } }
+                                                    >
+                                                        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                                                            Network: { web3Props.chainId === 42 ? 'Kovan' : 'Local' }
+                                                        </Typography>
+                                                    </Grid>
+                                                    <Grid
+                                                        item
+                                                        className={ classes.divider }
+                                                    >
+                                                        <Divider variant="middle" />
+                                                    </Grid>
+                                                    <Grid 
+                                                        item
+                                                        classes={ {
+                                                            root: classes.viewMyProfileLink
+                                                        } }
+                                                        onClick={ handleAccountDetailsClose }
+                                                    >
+                                                        <Link 
+                                                            to="profile"
+                                                            style={ { textDecoration: 'none' } }
+                                                        >
+                                                            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                                                                View My Profile
+                                                            </Typography>
+                                                        </Link>
+                                                    </Grid>
+                                                    <Grid
+                                                        item
+                                                        className={ classes.divider }
+                                                    >
+                                                        <Divider variant="middle" />
+                                                    </Grid>
+                                                    <Grid item>
+                                                        <Button
+                                                            variant="contained"
+                                                            className={ classes.primaryButton }
+                                                            onClick={ disconnectMetaMask }
+                                                            fullWidth
+                                                        >
+                                                            <p className={ classes.primaryButtonText }>
+                                                                Logout of MetaMask
+                                                            </p>
+                                                        </Button>
+                                                    </Grid>
+                                                </Grid>
+                                            </Menu>
                                         <Modal
                                             open={ openStartModal }
                                             onClose={ handleStartModalClose }
@@ -240,8 +342,6 @@ const NavBar = ( {
                                                                                         width="35"
                                                                                         color={ colorfulSpace4 }
                                                                                     />
-                                                                                    &nbsp;
-                                                                                    &nbsp;
                                                                                     <p className={ classes.disabledButtonText }>
                                                                                         Loading...
                                                                                     </p>
@@ -273,14 +373,17 @@ const NavBar = ( {
                                                                     xs={12}
                                                                 >
                                                                     <a 
-                                                                        className={ classes.primaryButtonOutlinedText }
+                                                                        style={ { textDecoration: 'none' } }
                                                                         href="https://metamask.io/download"
                                                                         target="_blank"
                                                                     >
                                                                         <Button
                                                                             variant="outlined"
-                                                                            className={ classes.primaryButtonOutlined }
+                                                                            classes={ {
+                                                                                root: classes.primaryButtonOutlined
+                                                                            } }
                                                                             fullWidth
+                                                                            onClick={ handleStartModalClose }
                                                                         >
                                                                             <p 
                                                                                 className={ classes.primaryButtonOutlinedText }

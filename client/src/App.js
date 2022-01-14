@@ -196,6 +196,7 @@ const App = () => {
             <CssBaseline />
             <Navbar 
                 connectToMetaMask={ connectToMetaMask }
+                disconnectMetaMask={ disconnectMetaMask }
                 web3Props={ web3Props }
                 pending={ pending }
                 toastType={ toastType }

@@ -5,6 +5,7 @@ import {
     , spaceBlue3
     , colorfulSpace4
     , colorfulSpace2
+    , spaceBlue4
 } from '../../globalStyles';
 
 const useStyles = makeStyles( ( theme ) => {
@@ -23,8 +24,11 @@ const useStyles = makeStyles( ( theme ) => {
         , navBarLink: {
             textAlign: 'center'
         }
-        , moreIcon: {
+        , moreIconContainer: {
             textAlign: 'right'
+            , color: '#fff'
+        }
+        , moreIcon: {
         }
         , startTitle: {
             marginBottom: 20
@@ -53,6 +57,7 @@ const useStyles = makeStyles( ( theme ) => {
             , fontWeight: 800
             , letterSpacing: '.05rem'
             , height: 40
+            , padding: '0 25px'
             , display: 'flex'
             , alignItems: 'center'
             , textAlign: 'center'
@@ -61,12 +66,14 @@ const useStyles = makeStyles( ( theme ) => {
             color: colorfulSpace4
             , fontWeight: 800
             , letterSpacing: '.05rem'
+            , padding: '0 36px'
         }
         , primaryButtonOutlinedText: {
             color: colorfulSpace2
             , fontWeight: 800
             , letterSpacing: '.05rem'
             , textDecoration: 'none'
+            , padding: '0 17px'
         }
         , primaryButtonText: {
             color: spaceBlue3
@@ -82,6 +89,36 @@ const useStyles = makeStyles( ( theme ) => {
             height: 40
             , display: 'flex'
             , alignItems: 'center'
+            , width: 223
+        }
+        , accountDetailsMenu: {
+            '& .MuiPaper-root': {
+                backgroundColor: spaceBlue3
+                , width: 400
+                , padding: 30
+            }
+        }
+        , accountDetailsMenuList: {
+            width: '100%'
+            , height: '100%'
+        }
+        , accountMenuListItem: {
+            backgroundColor: spaceBlue4
+            , margin: '10px 0'
+            , color: '#fff'
+            , padding: '0 10px'
+        }
+        , viewMyProfileLink: {
+            padding: '0 10px'
+        }
+        , accountDetailsTitle: {
+            padding: '0 20px'
+            , '& .MuiTypography-root': {
+                width: 100
+            }
+        }
+        , divider: {
+            width: 100
         }
     } );
 } );
