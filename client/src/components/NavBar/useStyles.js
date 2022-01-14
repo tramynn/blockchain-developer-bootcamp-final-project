@@ -2,9 +2,9 @@ import { createStyles, makeStyles } from '@material-ui/styles';
 
 import {
     spaceBlue5
-    , spaceBlue1
     , spaceBlue3
     , colorfulSpace4
+    , colorfulSpace2
 } from '../../globalStyles';
 
 const useStyles = makeStyles( ( theme ) => {
@@ -26,12 +26,15 @@ const useStyles = makeStyles( ( theme ) => {
         , moreIcon: {
             textAlign: 'right'
         }
+        , startTitle: {
+            marginBottom: 20
+        }
         , startModalContainer: {
             position: 'absolute'
             , top: '50%'
             , left: '50%'
             , transform: 'translate(-50%, -50%)'
-            , height: 200
+            , height: 300
             , width: 400
             , background: spaceBlue3
             , boxShadow: 24
@@ -41,28 +44,44 @@ const useStyles = makeStyles( ( theme ) => {
             , display: 'flex'
             , alignItems: 'center'
         }
-        , startModalInnerContainer: {
-            // height: 200
-            // , width: '100%'
+        , buttonsContainer: {
+            height: '100%'
+            , width: '100%'
         }
         , disabledButton: {
             color: colorfulSpace4
             , fontWeight: 800
             , letterSpacing: '.05rem'
-            , width: 200
-            // , '&:hover': {
-            //     backgroundColor: spaceBlue1
-            //     , color: spaceBlue5
-            // }
+            , height: 40
+            , display: 'flex'
+            , alignItems: 'center'
+            , textAlign: 'center'
         }
-        , primaryButton: {
-            color: spaceBlue5
+        , disabledButtonText: {
+            color: colorfulSpace4
             , fontWeight: 800
             , letterSpacing: '.05rem'
-            // , '&:hover': {
-            //     backgroundColor: spaceBlue1
-            //     , color: spaceBlue5
-            // }
+        }
+        , primaryButtonOutlinedText: {
+            color: colorfulSpace2
+            , fontWeight: 800
+            , letterSpacing: '.05rem'
+            , textDecoration: 'none'
+        }
+        , primaryButtonText: {
+            color: spaceBlue3
+            , fontWeight: 800
+            , letterSpacing: '.05rem'
+        }
+        , primaryButton: {
+            height: 40
+            , display: 'flex'
+            , alignItems: 'center'
+        }
+        , primaryButtonOutlined: {
+            height: 40
+            , display: 'flex'
+            , alignItems: 'center'
         }
     } );
 } );

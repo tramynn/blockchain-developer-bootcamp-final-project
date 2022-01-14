@@ -23,6 +23,7 @@ import { Hearts } from 'react-loader-spinner';
 
 // Component imports
 import StartButton from '../StartButton/StartButton';
+import InstallMetaMaskButton from '../InstallMetaMaskButton/InstallMetaMaskButton';
 
 // Style import
 import {
@@ -38,7 +39,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 const NavBar = ( {
     connectToMetaMask
-    , metaMaskProps
+    , web3Props
     , pending
     , toastType
     , openToast
@@ -47,12 +48,15 @@ const NavBar = ( {
 } ) => {
     const classes = useStyles();
     const [ openStartModal, setOpenStartModal ] = useState( false );
+
     // const [ openToast, setOpenToast ] = useState( false );
     // const [ accounts, setAccounts ] = useState( null );
     // const [ walletAddress, setWalletAddress ] = useState( null );
     // const [ contract, setContract ] = useState( null );
 
-    const handleStartModalOpen = () => setOpenStartModal( true );
+    const handleStartModalOpen = () => {
+        setOpenStartModal( true );
+    }
     const handleStartModalClose = () => setOpenStartModal( false );
 
     // const handleToastClose = ( event, reason ) => {
@@ -62,15 +66,14 @@ const NavBar = ( {
     //     setOpenToast(false);
     // }
 
-
     useEffect( () => {
-        if ( !pending && metaMaskProps.active ) {
+        if ( !pending && web3Props.active ) {
             handleStartModalClose();
-            // if ( !metaMaskProps.error ) {
+            // if ( !web3Props.error ) {
             //     setOpenToast( true );
             // }
         }
-    }, [ metaMaskProps.active, pending ]);
+    }, [ web3Props.active, pending ]);
 
     return (
         <section className={ classes.container }>
@@ -151,6 +154,11 @@ const NavBar = ( {
                                         <div
                                             onClick={ handleStartModalOpen }
                                         >
+                                            {/* {
+                                                web3Props.active
+                                                    ? <StartButton handleStartModalOpen />
+                                                    : <InstallMetaMaskButton />
+                                            } */}
                                             <StartButton handleStartModalOpen />
                                         </div>
                                         <Modal
@@ -175,73 +183,115 @@ const NavBar = ( {
                                                         direction="column"
                                                         justifyContent="center"
                                                         alignItems="center"
-                                                        className={ classes.startModalInnerContainer }
-                                                        // classes={ {
-                                                        //     root: classes.startModalInnerContainer
-                                                        // } }
                                                     >
                                                         <Grid 
                                                             item
                                                             xs={12}
-                                                            // classes={ {
-                                                            //     root: classes.startTitle
-                                                            // } }
+                                                            classes={ {
+                                                                root: classes.startTitle
+                                                            } }
                                                         >
                                                             <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
                                                                 Start
                                                             </Typography>
                                                         </Grid>
-                                                        {
-                                                            pending 
-                                                                ?
+                                                        <Grid 
+                                                            item
+                                                            xs={12}
+                                                        >
+                                                            <Grid 
+                                                                container
+                                                                direction="column"
+                                                                justifyContent="center"
+                                                                alignItems="center"
+                                                                spacing={1}
+                                                                className={ classes.buttonsContainer }
+                                                            >
                                                                 <Grid 
                                                                     item
                                                                     xs={12}
-                                                                    // classes={ {
-                                                                    //     root: classes.connectToMetamask
-                                                                    // } }
                                                                 >
-                                                                    <Button
-                                                                        variant="contained"
-                                                                        classes={ {
-                                                                            root: classes.disabledButton
-                                                                        } }
-                                                                        disabled={ true }
-                                                                    >
-                                                                        <Hearts 
-                                                                            arialLabel="loading-indicator" 
-                                                                            height="35"
-                                                                            width="35"
-                                                                            color={ colorfulSpace4 }
-                                                                        />
-                                                                        &nbsp;
-                                                                        <p className={ classes.disabledButton }>
-                                                                            Loading...
-                                                                        </p>
-                                                                    </Button>
+                                                                    <Typography variant="body2" component="div" sx={{ flexGrow: 1 }}>
+                                                                        Have MetaMask Installed?
+                                                                    </Typography>
                                                                 </Grid>
-                                                                :
                                                                 <Grid 
                                                                     item
                                                                     xs={12}
-                                                                    // classes={ {
-                                                                    //     root: classes.connectToMetamask
-                                                                    // } }
                                                                 >
-                                                                    <Button
-                                                                        variant="contained"
-                                                                        classes={ {
-                                                                            root: classes.button
-                                                                        } }
-                                                                        className={ classes.primaryButton }
-                                                                        onClick={ connectToMetaMask }
-                                                                    >
-                                                                        <p className={ classes.primaryButton }>
-                                                                            Connect To Metamask
-                                                                        </p>
-                                                                    </Button>
+                                                                    {
+                                                                        pending 
+                                                                            ?
+                                                                            <Grid 
+                                                                                item
+                                                                                xs={12}
+                                                                            >
+                                                                                <Button
+                                                                                    variant="contained"
+                                                                                    classes={ {
+                                                                                        root: classes.disabledButton
+                                                                                    } }
+                                                                                    disabled={ true }
+                                                                                    fullWidth
+                                                                                >
+                                                                                    <Hearts 
+                                                                                        arialLabel="loading-indicator" 
+                                                                                        height="35"
+                                                                                        width="35"
+                                                                                        color={ colorfulSpace4 }
+                                                                                    />
+                                                                                    &nbsp;
+                                                                                    &nbsp;
+                                                                                    <p className={ classes.disabledButtonText }>
+                                                                                        Loading...
+                                                                                    </p>
+                                                                                </Button>
+                                                                            </Grid>
+                                                                            :
+                                                                            <Button
+                                                                                variant="contained"
+                                                                                className={ classes.primaryButton }
+                                                                                onClick={ connectToMetaMask }
+                                                                                fullWidth
+                                                                            >
+                                                                                <p className={ classes.primaryButtonText }>
+                                                                                    Connect To Metamask
+                                                                                </p>
+                                                                            </Button>
+                                                                    }
                                                                 </Grid>
-                                                        }
+                                                                <Grid 
+                                                                    item
+                                                                    xs={12}
+                                                                >
+                                                                    <Typography variant="body2" component="div" sx={{ flexGrow: 1 }}>
+                                                                        Otherwise
+                                                                    </Typography>
+                                                                </Grid>
+                                                                <Grid 
+                                                                    item
+                                                                    xs={12}
+                                                                >
+                                                                    <a 
+                                                                        className={ classes.primaryButtonOutlinedText }
+                                                                        href="https://metamask.io/download"
+                                                                        target="_blank"
+                                                                    >
+                                                                        <Button
+                                                                            variant="outlined"
+                                                                            className={ classes.primaryButtonOutlined }
+                                                                            fullWidth
+                                                                        >
+                                                                            <p 
+                                                                                className={ classes.primaryButtonOutlinedText }
+                                                                            >
+                                                                                Install Metamask
+                                                                            </p>
+                                                                        </Button>
+                                                                    </a>
+                                                                </Grid>
+                                                            </Grid>
+                                                        </Grid>
                                                     </Grid>
                                                 </Grid>
                                             </Grid>
