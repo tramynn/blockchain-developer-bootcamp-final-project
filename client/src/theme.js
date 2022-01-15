@@ -44,7 +44,7 @@ const theme = createTheme({
                 , 'cursive'
             ].join( ',' )
             , color: spaceBlue1
-            , fontSize: '4rem'
+            , fontSize: '3.5rem'
             , fontWeight: 600
             , textAlign: 'center'
             , borderBottom: `15px solid ${ spaceBlue3 }`
@@ -77,7 +77,7 @@ const theme = createTheme({
                 , 'sans-serif'
             ].join( ',' )
             , color: '#fff'
-            , fontSize: '2rem'
+            , fontSize: '1.8rem'
             , fontWeight: 800
             , marginTop: '1rem'
             , marginBottom: '1rem'
