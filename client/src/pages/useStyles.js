@@ -49,9 +49,9 @@ const useStyles = makeStyles( ( theme ) => {
             , height: '45%'
         }
         , devDoggieTypeContainer: {
-            height: 200
+            height: 370
             , width: '100%'
-            , paddingTop: 50
+            , paddingTop: 40
         }
         , primaryButton: {
             height: 40

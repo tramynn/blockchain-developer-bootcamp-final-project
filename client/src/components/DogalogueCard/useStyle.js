@@ -1,11 +1,31 @@
 import { createStyles, makeStyles } from '@material-ui/styles';
 
-// import {
-// } from '../../globalStyles';
+import { spaceBlue1, spaceBlue3, spaceBlue4 } from '../../globalStyles';
 
 const useStyles = makeStyles( ( theme ) => {
     return createStyles( { 
         container: {
+            // , '& .MuiPaper-elevation24': {
+            //     background: spaceBlue3
+            // }
+        }
+        , img: {
+            height: '100%'
+            , width: '100%'
+        }
+        , feeContainer: {
+            padding: '2px 0'
+        }
+        , feeTitle: {
+            height: 25
+            , width: 50
+            , backgroundColor: spaceBlue4
+            , padding: '0 10px'
+            , fontWeight: 800
+            , borderRadius: 2
+        }
+        , fee: {
+            paddingLeft: 5
         }
     } );
 } );

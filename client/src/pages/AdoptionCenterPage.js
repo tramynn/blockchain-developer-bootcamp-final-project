@@ -12,13 +12,45 @@ import {
 // ABI
 import devDoggieTokenArtifact from '../contracts/DevDoggieToken.json';
 
+import devDoggieType1 from '../images/devdoggie_type_1.svg';
+import devDoggieType2 from '../images/devdoggie_type_2.svg';
+import devDoggieType3 from '../images/devdoggie_type_3.svg';
+
 // Style import
 import useStyles from './useStyles';
+import DogalogueCard from '../components/DogalogueCard/DogalogueCard';
+
+const devDoggieTypes = [
+    {
+        id: 0
+        , imgUrl: devDoggieType1
+        , description: 'White and yellow devdoggie type 1'
+        , isSelected: false
+    }
+    , {
+        id: 1
+        , imgUrl: devDoggieType2
+        , description: 'White devdoggie type 2'
+        , isSelected: false
+    }
+    , {
+        id: 2
+        , imgUrl: devDoggieType3
+        , description: 'White devdoggie type 3'
+        , isSelected: false
+    }
+];
 
 const AdoptionCenterPage = () => {
     const classes = useStyles();
     const [ firstName, setFirstName ] = useState( '' );
     const [ lastName, setLastName ] = useState( '' );
+    const [ devDoggieTokenType, setDevDoggieTokenType ] = useState( 0 );
+    console.log( 'devDoggieTokenType', devDoggieTokenType );
+
+    const handleDevDoggieSelection = ( index ) => {
+        setDevDoggieTokenType( index );
+    }
 
     return (
     <section className={ classes.container }>
@@ -63,29 +95,28 @@ const AdoptionCenterPage = () => {
                             <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
                                 1. Choose DevDoggie Type
                             </Typography>
-                            {/* TODO: Mapped DevDoggie Types */}
                             <Grid
                                 container
                                 direction="row"
                                 justifyContent="space-around"
-                                alignItems="center"
-                                space={5}
                             >
-                                <Grid
-                                    item
-                                >
-                                    type 1
-                                </Grid>
-                                <Grid
-                                    item
-                                >
-                                    type 2
-                                </Grid>
-                                <Grid
-                                    item
-                                >
-                                    type 3
-                                </Grid>
+                                {
+                                    devDoggieTypes.map( ( devDoggieType, index ) => {
+                                        const isSelected = devDoggieTokenType === index;
+                                        return (
+                                            <Grid
+                                                item
+                                                onClick={ () => handleDevDoggieSelection( index ) }
+                                            >
+                                                <DogalogueCard
+                                                    imgUrl={ devDoggieType.imgUrl }
+                                                    description={ devDoggieTokenType.description }
+                                                    isSelected={ isSelected }
+                                                />
+                                            </Grid>
+                                        )
+                                    } )
+                                }
                             </Grid>
                         </Grid>
                         <Grid
