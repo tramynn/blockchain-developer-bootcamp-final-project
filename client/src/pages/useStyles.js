@@ -2,6 +2,7 @@ import { createStyles, makeStyles } from '@material-ui/styles';
 
 import {
     pageBackgroundColor
+    , spaceBlue3
 } from '../globalStyles.js';
 
 const useStyles = makeStyles( ( theme ) => {
@@ -10,7 +11,7 @@ const useStyles = makeStyles( ( theme ) => {
             background: pageBackgroundColor
             , width: '100vw'
             , height: '100vh'
-            , padding: '110px 20px'
+            , padding: '110px 20px 20px 20px'
             , overflow: 'hidden'
         }
         , containerSecond: {
@@ -46,6 +47,33 @@ const useStyles = makeStyles( ( theme ) => {
         , guideImage: {
             width: '45%'
             , height: '45%'
+        }
+        , devDoggieTypeContainer: {
+            height: 200
+            , width: '100%'
+            , paddingTop: 50
+        }
+        , primaryButton: {
+            height: 40
+            , display: 'flex'
+            , alignItems: 'center'
+        }
+        , primaryButtonText: {
+            color: spaceBlue3
+            , fontWeight: 800
+            , letterSpacing: '.05rem'
+            , padding: '0 50px'
+        }
+        , textFieldContainer: {
+            padding: '10px 0'
+            , color: '#fff'
+        }
+        , textField: {
+            color: '#fff'
+        }
+        , input: {
+            color: 'pink'
+            
         }
     } );
 } );
