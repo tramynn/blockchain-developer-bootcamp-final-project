@@ -1,13 +1,10 @@
 import { createStyles, makeStyles } from '@material-ui/styles';
 
-import { spaceBlue1, spaceBlue3, spaceBlue4 } from '../../globalStyles';
+import { spaceBlue1, spaceBlue3, spaceBlue4, colorfulSpace2 } from '../../globalStyles';
 
 const useStyles = makeStyles( ( theme ) => {
     return createStyles( { 
         container: {
-            // , '& .MuiPaper-elevation24': {
-            //     background: spaceBlue3
-            // }
         }
         , img: {
             height: '100%'

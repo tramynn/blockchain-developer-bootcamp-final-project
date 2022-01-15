@@ -174,7 +174,7 @@ const NavBar = ( {
                                     <Grid
                                         item
                                         xs={6}
-                                        className={ classes.navBarLink }
+                                        className={ classes.navBarButton }
                                     >
                                             {
                                                 web3Props.active

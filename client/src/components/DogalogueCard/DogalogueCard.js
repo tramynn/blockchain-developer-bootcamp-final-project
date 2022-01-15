@@ -32,6 +32,9 @@ const DogalogueCard = ({
                 , color: '#fff'
                 , padding: 20
                 , margin: 20
+                , '& :hover': {
+                    border: `3px solid ${ colorfulSpace2 }`
+                }
             } }
             elevation={ 24 }
         >

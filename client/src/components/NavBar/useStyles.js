@@ -22,7 +22,17 @@ const useStyles = makeStyles( ( theme ) => {
             backgroundColor: spaceBlue5
         }
         , navBarLink: {
-            textAlign: 'center'
+            textAlign: 'right'
+            , '& :hover': {
+                color: 'transparent'
+                , cursor: 'pointer'
+            }
+        }
+        , navBarButton: {
+            textAlign: 'right'
+            , '& :hover': {
+                cursor: 'pointer'
+            }
         }
         , moreIconContainer: {
             textAlign: 'right'
