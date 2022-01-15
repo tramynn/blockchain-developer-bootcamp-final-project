@@ -15,6 +15,7 @@ import {
 // Component imports
 import LandingPage from './pages/LandingPage';
 import DogaloguePage from './pages/DogaloguePage';
+import GuidePage from './pages/GuidePage';
 import ErrorPage from './pages/ErrorPage';
 import AdoptionCenterPage from './pages/AdoptionCenterPage';
 import MyProfilePage from './pages/MyProfilePage';
@@ -210,6 +211,7 @@ const App = () => {
                     <Route path=":dogId" element={ <DogaloguePage /> } />
                 </Route>
                 <Route path="adoption" element={ <AdoptionCenterPage /> } />
+                <Route path="guide" element={ <GuidePage /> } />
                 <Route path="profile" element={ <MyProfilePage /> }>
                     <Route path=":profileAddress" element={<MyProfilePage />} />
                 </Route>

@@ -43,6 +43,10 @@ const useStyles = makeStyles( ( theme ) => {
             width: '100%'
             , height: '100%'
         }
+        , guideImage: {
+            width: '45%'
+            , height: '45%'
+        }
     } );
 } );
 

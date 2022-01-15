@@ -107,7 +107,7 @@ const NavBar = ( {
                     >
                         <Grid
                             item
-                            xs={9}
+                            xs={8}
                         >
                             <Link
                                 to="/"
@@ -120,7 +120,7 @@ const NavBar = ( {
                         </Grid>
                         <Grid
                             item
-                            xs={3}
+                            xs={4}
                         >
                             <Grid
                                 container
@@ -151,14 +151,25 @@ const NavBar = ( {
                                         xs={6}
                                         className={ classes.navBarLink }
                                     >
-                                        <Link 
-                                            to="dogalogue"
-                                            style={ { textDecoration: 'none' } }
-                                        >
-                                            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                                                Dogalogue
-                                            </Typography>
-                                        </Link>
+                                        {
+                                            web3Props.active
+                                                ? 
+                                                <Link 
+                                                    to="adoption"
+                                                    style={ { textDecoration: 'none' } }
+                                                >
+                                                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                                                        Adoption Center
+                                                    </Typography>
+                                                </Link>
+                                                : 
+                                                <Link 
+                                                    to="guide"
+                                                    style={ { textDecoration: 'none' } }
+                                                >
+                                                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>Guide</Typography>
+                                                </Link>
+                                        }
                                     </Grid>
                                     <Grid
                                         item
@@ -218,7 +229,13 @@ const NavBar = ( {
                                                         } }
                                                     >
                                                         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                                                            Network: { web3Props.chainId === 42 ? 'Kovan' : 'Local' }
+                                                            Network: { 
+                                                                web3Props.chainId === 42 
+                                                                    ? 'Kovan' 
+                                                                    : web3Props.chainId === 1337 
+                                                                        ? 'Local'
+                                                                        : 'Please connect to Kovan.'
+                                                            }
                                                         </Typography>
                                                     </Grid>
                                                     <Grid

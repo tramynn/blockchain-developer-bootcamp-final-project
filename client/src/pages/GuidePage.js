@@ -1,4 +1,5 @@
 import React from 'react';
+
 // Library import
 import { 
     Typography 
@@ -7,20 +8,17 @@ import {
 
 // Component imports
 
-// Assets
-import landingImg from '../images/landing_hero.png';
-import landingAboutImg from '../images/devdoggies_about.svg';
+import devDoggieGuide from '../images/devdoggie_guide.svg';
 
 // Style import
 import useStyles from './useStyles';
 
-const LandingPage = () => {
+const GuidePage = () => {
     const classes = useStyles();
-
+    
     return (
         <>
             <section className={ classes.container }>
-                {/* <Navbar /> */}
                 <Grid
                     container
                     direction="column"
@@ -30,47 +28,27 @@ const LandingPage = () => {
                 >
                     <Grid 
                         item
-                        xs={12}
+                        xs={6}
                     >
-                        <Typography variant="h1" component="div" sx={{ flexGrow: 1 }}>DevDoggies</Typography>
+                        <Typography variant="h1" component="div" sx={{ flexGrow: 1 }}>Guide</Typography>
                     </Grid>
                     <Grid 
                         item 
                         xs={12}
                     >
                         <Typography variant="body1" component="div" sx={{ flexGrow: 1 }}>
-                            Adopt a doggie and love them!
+                            This guide will show how to adopt your doggie.
                         </Typography>
                     </Grid>
-                    <Grid 
-                        item
-                        xs={12}
-                        className={ classes.pageImgContainer }
-                    >
-                        <img 
-                            src={ landingImg }
-                            alt="Woman holding a cellphone with dog vector art." 
-                            className={ classes.pageImg }
-                        />
-                    </Grid>
-                </Grid>
-            </section>
-            <section className={ classes.containerSecond }>
-                <Grid
-                    container
-                    direction="column"
-                    justifyContent="center"
-                    alignItems="center"
-                >
                     <Grid 
                         item
                         xs={12}
                         className={ classes.pageAboutImgContainer }
                     >
                         <img 
-                            src={ landingAboutImg }
+                            src={ devDoggieGuide }
                             alt="DevDoggies about image with dog and food vector art." 
-                            className={ classes.pageImg }
+                            className={ classes.guideImage }
                         />
                     </Grid>
                 </Grid>
@@ -79,4 +57,4 @@ const LandingPage = () => {
     );
 };
 
-export default LandingPage;
+export default GuidePage;
