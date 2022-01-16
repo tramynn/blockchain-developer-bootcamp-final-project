@@ -9,7 +9,7 @@ A decentralized platform (adoption center) where users can view and adopt DevDog
 ## Screencast Link
 
 ## Public Ethereum wallet for certification
-
+`0x020cD1e2C713ac6143B5f9D7423A07c89418a8E6`
 ## Definitions
 
 ## Features
