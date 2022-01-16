@@ -8,7 +8,9 @@ import { injected } from '../components/Wallet/connectors';
 import artifact from '../contracts/DevDoggieToken.json';
 
 export default function useDevDoggieTokenContract() {
-    const contract = useRef();
+    // const contract = useRef();
+    // console.log( 'contract.current', contract.current );
+    const [ contract, setContract ] = useState( false );
     const [ isInitialized, setIsInitialized ] = useState( false );
     const [ currentAdoptionFee, setCurrentAdoptionFee ] = useState();
     const { 
@@ -24,7 +26,7 @@ export default function useDevDoggieTokenContract() {
 
     // Function to get current adoption fee
     const updateAdoptionFee = async () => {
-        const newAdoptionFee = await contract.current.methods.getCurrentAdoptionFee().call();
+        const newAdoptionFee = await contract.methods.getCurrentAdoptionFee().call();
         console.log( 'newAdoptionFee', newAdoptionFee );
         // setCurrentAdoptionFee( newAdoptionFee );
     };
@@ -54,9 +56,11 @@ export default function useDevDoggieTokenContract() {
         if (
             address
         ) {
+            console.log( 'hit' );
             contract.current = new library.eth.Contract(artifact.abi, chainId && address, {
                 from: account
             })
+            setContract( contract.current );
             setIsInitialized( true );
             // console.log(  'contract.current.methods', contract.current.methods.getCurrentAdoptionFee );
         }
