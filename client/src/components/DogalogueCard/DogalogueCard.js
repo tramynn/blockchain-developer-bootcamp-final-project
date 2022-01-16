@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 // Library imports
 import { 
@@ -7,8 +7,13 @@ import {
     , TextField
     , Paper
 } from '@mui/material';
+
 // Component imports
 import devDoggieType1 from '../../images/devdoggie_type_1.svg';
+
+// Utils
+import useDevDoggieTokenContract from '../../hooks/useDevDoggieTokenContract';
+
 // Style imports
 import { colorfulSpace2, spaceBlue1, spaceBlue3 } from '../../globalStyles';
 import useStyles from './useStyle';
@@ -19,6 +24,7 @@ const DogalogueCard = ({
     , isSelected
 }) => {
     const classes = useStyles();
+    const { currentAdoptionFee } = useDevDoggieTokenContract();
 
     return (
         <Paper
@@ -85,7 +91,7 @@ const DogalogueCard = ({
                                 className={ classes.fee }
                             >
                                 {/* TODO: add getCurrentAdoptionFee() */}
-                                0.02 ETH
+                                { currentAdoptionFee }
                             </p>
                         </Grid>
                     </Grid>

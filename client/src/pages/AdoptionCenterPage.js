@@ -46,7 +46,6 @@ const AdoptionCenterPage = () => {
     const [ firstName, setFirstName ] = useState( '' );
     const [ lastName, setLastName ] = useState( '' );
     const [ devDoggieTokenType, setDevDoggieTokenType ] = useState( 0 );
-    console.log( 'devDoggieTokenType', devDoggieTokenType );
 
     const handleDevDoggieSelection = ( index ) => {
         setDevDoggieTokenType( index );
@@ -105,6 +104,7 @@ const AdoptionCenterPage = () => {
                                         const isSelected = devDoggieTokenType === index;
                                         return (
                                             <Grid
+                                                key={ `devdoggie-type-${ index }`}
                                                 item
                                                 onClick={ () => handleDevDoggieSelection( index ) }
                                             >

@@ -52,13 +52,12 @@ const App = () => {
         , chainId
     } = useWeb3React();
     const web3React = useWeb3React();
-    console.log( 'web3React', web3React );
+    // console.log( 'web3React', web3React );
 
     const [ openToast, setOpenToast ] = useState( false );
     const [ toastType, setToastType ] = useState( '' );
 
     const [ toastMessage, setToastMessage ] = useState( '' );
-    console.log( 'toastMessage', toastMessage );
 
     const web3Props = {
         active
@@ -68,7 +67,7 @@ const App = () => {
         , error
         , chainId
     }
-    console.log( 'chainId', typeof chainId );
+
     const handleToastClose = ( event, reason ) => {
         if (reason === 'clickaway') {
             return;
