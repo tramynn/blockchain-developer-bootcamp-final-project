@@ -48,10 +48,7 @@ module.exports = {
       port: 8545,            // Standard Ethereum port (default: none)
       network_id: "*",       // Any network (default: none)
       gas: 4612388,
-      gasPrice: 100000000000,
-      confirmations: 2,    // # of confs to wait between deployments. (default: 0)
-      timeoutBlocks: 200,  // # of blocks before a deployment times out  (minimum/default: 50)
-      skipDryRun: true  
+      gasPrice: 100000000000
     },
     // Another network with more advanced options...
     // advanced: {
