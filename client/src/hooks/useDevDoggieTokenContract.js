@@ -8,7 +8,7 @@ import { injected } from '../components/Wallet/connectors';
 import artifact from '../contracts/DevDoggieToken.json';
 
 export default function useDevDoggieTokenContract() {
-    const [ contract, setContract ] = useState( false );
+    const [ contract, setContract ] = useState();
     const [ isInitialized, setIsInitialized ] = useState( false );
     const [ currentAdoptionFee, setCurrentAdoptionFee ] = useState();
     const { 
@@ -35,12 +35,16 @@ export default function useDevDoggieTokenContract() {
     };
 
     // Function to invoke a mutating method on our contract
-    const adoptDevDoggie = async () => {
-        const params = {
-
-        };
+    const adoptDevDoggie = async ( params ) => {
+        const { devDoggieType, firstName, lastName } = params;
         try {
-            await contract.methods.adoptDevDoggie().send( { from: account } );
+            const txHash = await contract.methods.adoptDevDoggie( devDoggieType
+                , firstName
+                , lastName
+                ).send( { from: account, value: library.utils.toWei(currentAdoptionFee, 'ether') } )
+            if ( txHash ) {
+                console.log( 'success!' );
+            }
         } catch ( e ) {
             console.error( e )
         }

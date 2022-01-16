@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 
 // Library imports
 import { 
@@ -21,9 +21,9 @@ const DogalogueCard = ({
     imgUrl
     , description
     , isSelected
+    , currentAdoptionFee
 }) => {
     const classes = useStyles();
-    const { currentAdoptionFee } = useDevDoggieTokenContract();
 
     return (
         <Paper
@@ -35,8 +35,8 @@ const DogalogueCard = ({
                 , boxSizing: 'border-box'
                 , borderRadius: 5
                 , color: '#fff'
-                , padding: 20
-                , margin: 20
+                , padding: 10
+                , margin: 10
                 , '& :hover': {
                     border: `3px solid ${ colorfulSpace2 }`
                 }

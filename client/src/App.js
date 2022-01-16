@@ -209,7 +209,18 @@ const App = () => {
                 <Route exact path="dogalogue" element={ <DogaloguePage /> }>
                     <Route path=":dogId" element={ <DogaloguePage /> } />
                 </Route>
-                <Route path="adoption" element={ <AdoptionCenterPage /> } />
+                <Route 
+                    path="adoption" 
+                    element={ 
+                        <AdoptionCenterPage 
+                            pending={ pending }
+                            toastType={ toastType }
+                            openToast={ openToast }
+                            handleToastClose={ handleToastClose }
+                            toastMessage={ toastMessage }
+                        /> 
+                    } 
+                />
                 <Route path="guide" element={ <GuidePage /> } />
                 <Route path="profile" element={ <MyProfilePage /> }>
                     <Route path=":profileAddress" element={<MyProfilePage />} />

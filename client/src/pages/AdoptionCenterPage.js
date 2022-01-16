@@ -16,6 +16,9 @@ import devDoggieType1 from '../images/devdoggie_type_1.svg';
 import devDoggieType2 from '../images/devdoggie_type_2.svg';
 import devDoggieType3 from '../images/devdoggie_type_3.svg';
 
+// Utils
+import useDevDoggieTokenContract from '../hooks/useDevDoggieTokenContract';
+
 // Style import
 import useStyles from './useStyles';
 import DogalogueCard from '../components/DogalogueCard/DogalogueCard';
@@ -25,34 +28,57 @@ const devDoggieTypes = [
         id: 0
         , imgUrl: devDoggieType1
         , description: 'White and yellow devdoggie type 1'
-        , isSelected: false
     }
     , {
         id: 1
         , imgUrl: devDoggieType2
         , description: 'White devdoggie type 2'
-        , isSelected: false
     }
     , {
         id: 2
         , imgUrl: devDoggieType3
         , description: 'White devdoggie type 3'
-        , isSelected: false
     }
 ];
 
-const AdoptionCenterPage = () => {
+const AdoptionCenterPage = ( {
+    pending
+    , toastType
+    , openToast
+    , handleToastClose
+    , toastMessage
+} ) => {
     const classes = useStyles();
     const [ firstName, setFirstName ] = useState( '' );
     const [ lastName, setLastName ] = useState( '' );
     const [ devDoggieTokenType, setDevDoggieTokenType ] = useState( 0 );
+    const { adoptDevDoggie, currentAdoptionFee } = useDevDoggieTokenContract();
+    const [ error, setError ] = useState( false );
 
     const handleDevDoggieSelection = ( index ) => {
         setDevDoggieTokenType( index );
     }
 
+    const handleAdoptionFee = () => {
+        if ( 
+            !firstName && !lastName 
+            || !firstName
+            || !lastName
+        ) {
+            setError( true );
+            // Display error toast message
+            return;
+        }
+        const params = {
+            devDoggieType: devDoggieTokenType
+            , firstName
+            , lastName
+        }
+        adoptDevDoggie( params )
+    }
+
     return (
-    <section className={ classes.container }>
+    <section className={ classes.containerThird }>
             <Grid
                 container
                 direction="column"
@@ -112,6 +138,7 @@ const AdoptionCenterPage = () => {
                                                     imgUrl={ devDoggieType.imgUrl }
                                                     description={ devDoggieTokenType.description }
                                                     isSelected={ isSelected }
+                                                    currentAdoptionFee={ currentAdoptionFee }
                                                 />
                                             </Grid>
                                         )
@@ -148,6 +175,8 @@ const AdoptionCenterPage = () => {
                                         onChange={ ( e ) => setFirstName( e.target.value ) }
                                         color="secondary"
                                         focused
+                                        helperText={ error ? 'Please enter a first name.' : null }
+                                        error={ error && !firstName }
                                     />
                                 </Grid>
                                 <Grid
@@ -166,6 +195,8 @@ const AdoptionCenterPage = () => {
                                         onChange={ ( e ) => setLastName( e.target.value ) }
                                         color="secondary"
                                         focused
+                                        helperText={ error ? 'Please enter a last name.' : null }
+                                        error={ error && !lastName }
                                     />
                                 </Grid>
                                 <Grid
@@ -174,7 +205,8 @@ const AdoptionCenterPage = () => {
                                     <Button
                                         variant="contained"
                                         className={ classes.primaryButton }
-                                        // onClick={ payAdoptionFee }
+                                        onClick={ handleAdoptionFee }
+                                        // disable={ error }
                                         fullWidth
                                     >
                                         <p className={ classes.primaryButtonText }>

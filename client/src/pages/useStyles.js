@@ -14,6 +14,13 @@ const useStyles = makeStyles( ( theme ) => {
             , padding: '110px 20px 20px 20px'
             , overflow: 'hidden'
         }
+        , containerThird: {
+            background: pageBackgroundColor
+            , width: '100vw'
+            , height: '120vh'
+            , padding: '110px 20px 20px 20px'
+            , overflow: 'hidden'
+        }
         , containerSecond: {
             background: pageBackgroundColor
             , width: '100vw'
