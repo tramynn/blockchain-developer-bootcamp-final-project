@@ -22,7 +22,7 @@ contract DevDoggieToken is ERC721, ReentrancyGuard, Ownable {
     uint8 constant NAME_MAX_LENGTH = 64;
 
     // @notice Current adoption fee for each devdoggie token in Ether
-    uint256 currentAdoptionFee = 0.02 ether;
+    uint256 currentAdoptionFee = 0.002 ether;
 
     // @notice The devdoggie token types (1, 2, 3);
     mapping(uint256 => uint256) devDoggieTypes;
@@ -82,9 +82,9 @@ contract DevDoggieToken is ERC721, ReentrancyGuard, Ownable {
             bytes memory _lastNameBytes = bytes(_lastName);
 
             require(_firstNameBytes.length >= NAME_MIN_LENGTH, "First name is too short.");
-            require(_firstNameBytes.length >= NAME_MAX_LENGTH, "First name is too long.");
+            require(_firstNameBytes.length <= NAME_MAX_LENGTH, "First name is too long.");
             require(_lastNameBytes.length >= NAME_MIN_LENGTH, "Last name is too short.");
-            require(_lastNameBytes.length >= NAME_MAX_LENGTH, "Last name is too long.");
+            require(_lastNameBytes.length <= NAME_MAX_LENGTH, "Last name is too long.");
 
             require(msg.value >= currentAdoptionFee, "Amount of Ether sent too small.");
 
