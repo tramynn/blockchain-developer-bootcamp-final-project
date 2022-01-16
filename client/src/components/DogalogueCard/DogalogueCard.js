@@ -9,7 +9,6 @@ import {
 } from '@mui/material';
 
 // Component imports
-import devDoggieType1 from '../../images/devdoggie_type_1.svg';
 
 // Utils
 import useDevDoggieTokenContract from '../../hooks/useDevDoggieTokenContract';
@@ -90,8 +89,7 @@ const DogalogueCard = ({
                             <p
                                 className={ classes.fee }
                             >
-                                {/* TODO: add getCurrentAdoptionFee() */}
-                                { currentAdoptionFee }
+                                { currentAdoptionFee } ETH
                             </p>
                         </Grid>
                     </Grid>

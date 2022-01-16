@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useWeb3React } from '@web3-react/core'
 
 // Components
@@ -8,8 +8,6 @@ import { injected } from '../components/Wallet/connectors';
 import artifact from '../contracts/DevDoggieToken.json';
 
 export default function useDevDoggieTokenContract() {
-    // const contract = useRef();
-    // console.log( 'contract.current', contract.current );
     const [ contract, setContract ] = useState( false );
     const [ isInitialized, setIsInitialized ] = useState( false );
     const [ currentAdoptionFee, setCurrentAdoptionFee ] = useState();
@@ -23,17 +21,29 @@ export default function useDevDoggieTokenContract() {
         , error
         , chainId
     } = useWeb3React();
-
+    console.log( 'contract', contract );
+    console.log( 'library', library );
     // Function to get current adoption fee
-    const updateAdoptionFee = async () => {
-        const newAdoptionFee = await contract.methods.getCurrentAdoptionFee().call();
-        console.log( 'newAdoptionFee', newAdoptionFee );
-        // setCurrentAdoptionFee( newAdoptionFee );
+    const fetchAdoptionFee = async () => {
+        try {
+            let newAdoptionFee = await contract.methods.getCurrentAdoptionFee().call();
+            let convertedFromWei = library.utils.fromWei(newAdoptionFee, 'ether');
+            setCurrentAdoptionFee( convertedFromWei );
+        } catch ( e ) {
+            console.error( e );
+        }
     };
 
     // Function to invoke a mutating method on our contract
     const adoptDevDoggie = async () => {
-        // await contract.current.methods.adoptDevDoggie.send();
+        const params = {
+
+        };
+        try {
+            await contract.methods.adoptDevDoggie().send( { from: account } );
+        } catch ( e ) {
+            console.error( e )
+        }
     }
 
     const initializeWeb3 = async () => {
@@ -53,23 +63,18 @@ export default function useDevDoggieTokenContract() {
         // setContract( contract );
         const address = contract?.address;
         
-        if (
-            address
-        ) {
-            console.log( 'hit' );
-            contract.current = new library.eth.Contract(artifact.abi, chainId && address, {
+        if ( address) {
+            const contractInstance = new library.eth.Contract(artifact.abi, chainId && address, {
                 from: account
             })
-            setContract( contract.current );
+            setContract( contractInstance );
             setIsInitialized( true );
-            // console.log(  'contract.current.methods', contract.current.methods.getCurrentAdoptionFee );
         }
     }, [] );
 
     useEffect( () => {
         if ( isInitialized ) {
-            console.log( 'hit initialize' );
-            updateAdoptionFee();
+            fetchAdoptionFee();
         }
     }, [ isInitialized ] );
 
