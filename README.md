@@ -88,7 +88,7 @@ npm run start
 // Start in root directory
 npm install
 ```
-- Run a local ethereum node on port `7545` using the Ganache GUI
+- Run a local ethereum node on port `8545` using the Ganache GUI
 - Run `truffle compile --network development`
 - Run `truffle migrate --network development`
 ### To run smart contract tests:
