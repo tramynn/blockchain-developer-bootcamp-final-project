@@ -6,25 +6,31 @@ import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-// @title A simulator to adopt a devdoggie
+// @title Contract for adopting a DevDoggie
 // @author Tramy N. Nguyen
-// @notice 
-// @dev 
+// @notice Allows a user to obtain ownership of a DevDoggie NFT
 contract DevDoggieToken is ERC721, ReentrancyGuard, Ownable {
+    /* 
+        CONSTANTS 
+    */
 
-    /* DATATYPES */
-    using Counters for Counters.Counter;
-    Counters.Counter private _tokenIds;
-    address contractAddress;
-
-    /* CONSTANTS */
     uint8 constant NAME_MIN_LENGTH = 1;
     uint8 constant NAME_MAX_LENGTH = 64;
+
+    /* 
+        DATATYPES 
+    */
+
+    // @notice Uses the Counter logic from OpenZeppelin
+    // @dev Creates ID generation for a DevDoggie token
+    using Counters for Counters.Counter;
+    Counters.Counter private _tokenIds;
 
     // @notice Current adoption fee for each devdoggie token in Ether
     uint256 currentAdoptionFee = 0.002 ether;
 
-    // @notice The devdoggie token types (1, 2, 3);
+    // @notice The devdoggie token types
+    // @dev Is 1, 2, or 3
     mapping(uint256 => uint256) devDoggieTypes;
 
     // @notice The first name of the devdoggie
@@ -37,11 +43,7 @@ contract DevDoggieToken is ERC721, ReentrancyGuard, Ownable {
     // @dev This is an array of devdoggies struct
     mapping (uint256 => DevDoggie) public adoptedDevDoggies;
 
-    // DevDoggie[] public myDevDoggies;
-
     struct DevDoggie {
-        // uint devDoggieId;
-        // address nftContract;
         uint256 tokenId;
         address owner;
         uint256 devDoggieType;
@@ -49,9 +51,19 @@ contract DevDoggieToken is ERC721, ReentrancyGuard, Ownable {
         string lastName;
     }
 
-    /* EVENTS */
+    /* 
+        EVENTS
+    */
+
+    // @notice Emitted when a DevDoggie is adopted
+    // @param buyer is the msg.sender
+    // @param buyer is the msg.sender
     event DevDoggieAdopted(address indexed buyer, uint256 devDoggieId);
 
+    /* 
+        MODIFIERS
+    */
+    
     modifier isOwner (address _owner) {
         require( msg.sender == _owner, "Owner must be the same as the message sender." );
         _;
@@ -60,10 +72,14 @@ contract DevDoggieToken is ERC721, ReentrancyGuard, Ownable {
     constructor() ERC721("DevDoggieToken", "TARO") {
     }
 
-    // Requires the amount of Ether be at least or more of the currentPrice
+    /* 
+        FUNCTIONS
+    */
+
+    // @notice Function for adopting a DevDoggie
+    // @dev Requires the amount of Ether be at least or more of the currentPrice
     // @dev Creates an instance of a devdoggie token and mints it to the purchaser
-    // @param _owner The address of the owner of this newly generated devdoggie token
-    // @param _type The devdoggie token as an integer
+    // @param _devDoggieType The devdoggie token as an integer
     // @param _firstName The first name of the devdoggie token
     // @param _lastName The last name of the devdoggie token
     // @return Returns the devDoggieId of uint256
@@ -95,8 +111,6 @@ contract DevDoggieToken is ERC721, ReentrancyGuard, Ownable {
             uint256 newDevDoggieId = _tokenIds.current();
             _mint(msg.sender, newDevDoggieId);
 
-            // 
-
             // Adds properties of new devdoggie that made the call to the adoptedDevDoggies array
             adoptedDevDoggies[newDevDoggieId] = DevDoggie( {
                 tokenId: newDevDoggieId
@@ -112,10 +126,12 @@ contract DevDoggieToken is ERC721, ReentrancyGuard, Ownable {
         }
 
     // @notice Returns all the devdoggie tokens the user owns
-    // @return An array of token indices
+    // @dev Finds the DevDoggieTokens of the owner
+    // @return An array of DevDoggie tokens for the owner/buyer
     function getMyDevDoggies()
         public
         view
+        isOwner
         returns (DevDoggie[] memory)
         {
             uint totalDevDoggieCount = _tokenIds.current();
@@ -154,8 +170,12 @@ contract DevDoggieToken is ERC721, ReentrancyGuard, Ownable {
             // }
             return myDevDoggies;
         }
-    // @notice Returns the information about a specific devdoggie token
-    // @param _tokenId The ID of the devdoggie token
+
+    // @notice Returns the information about a specific DevDoggie token
+    // @param _tokenId The ID of the DevDoggie token
+    // @return Returns a _devDoggieType of uint256
+    // @return Returns a string for _devDoggieFirstName
+    // @return Returns a string for _devDoggieLastName
     function getDevDoggie(uint256 _tokenId)
         external
         view
@@ -170,6 +190,8 @@ contract DevDoggieToken is ERC721, ReentrancyGuard, Ownable {
             _devDoggieLastName = devDoggieLastNames[_tokenId];
         }
 
+    // @notice Function for retrieving the currentAdoptionFee
+    // @return Returns the adoptionFee of uint256
     function getCurrentAdoptionFee()
         external
         view
