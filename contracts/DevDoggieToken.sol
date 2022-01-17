@@ -131,7 +131,7 @@ contract DevDoggieToken is ERC721, ReentrancyGuard, Ownable {
     function getMyDevDoggies()
         public
         view
-        isOwner
+        isOwner( msg.sender )
         returns (DevDoggie[] memory)
         {
             uint totalDevDoggieCount = _tokenIds.current();
