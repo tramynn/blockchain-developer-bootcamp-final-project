@@ -3,6 +3,7 @@ import { createStyles, makeStyles } from '@material-ui/styles';
 import {
     pageBackgroundColor
     , spaceBlue3
+    , colorfulSpace4
 } from '../globalStyles.js';
 
 const useStyles = makeStyles( ( theme ) => {
@@ -12,14 +13,14 @@ const useStyles = makeStyles( ( theme ) => {
             , width: '100vw'
             , height: '100vh'
             , padding: '110px 20px 20px 20px'
-            , overflow: 'hidden'
+            , overflow: 'auto'
         }
         , containerThird: {
             background: pageBackgroundColor
             , width: '100vw'
-            , height: '120vh'
+            , height: '100vh'
             , padding: '110px 20px 20px 20px'
-            , overflow: 'hidden'
+            , overflow: 'auto'
         }
         , containerSecond: {
             background: pageBackgroundColor
@@ -79,8 +80,22 @@ const useStyles = makeStyles( ( theme ) => {
             color: '#fff'
         }
         , input: {
-            color: 'pink'
-            
+        }
+        , disabledButton: {
+            color: colorfulSpace4
+            , fontWeight: 800
+            , letterSpacing: '.05rem'
+            , height: 40
+            , padding: '0 25px'
+            , display: 'flex'
+            , alignItems: 'center'
+            , textAlign: 'center'
+        }
+        , disabledButtonText: {
+            color: colorfulSpace4
+            , fontWeight: 800
+            , letterSpacing: '.05rem'
+            , padding: '0 36px'
         }
     } );
 } );

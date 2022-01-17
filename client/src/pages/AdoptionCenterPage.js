@@ -6,9 +6,14 @@ import {
     , TextField
     , Button
     , Paper
+    , Snackbar
+    , Alert as MuiAlert
+    , AlertTitle
 } from '@mui/material';
-// Component imports
+import { Hearts } from 'react-loader-spinner';
 
+// Component imports
+import DogalogueCard from '../components/DogalogueCard/DogalogueCard';
 // ABI
 import devDoggieTokenArtifact from '../contracts/DevDoggieToken.json';
 
@@ -20,8 +25,16 @@ import devDoggieType3 from '../images/devdoggie_type_3.svg';
 import useDevDoggieTokenContract from '../hooks/useDevDoggieTokenContract';
 
 // Style import
+import {
+    colorfulSpace4
+    , spaceBlue4
+} from '../globalStyles';
+
 import useStyles from './useStyles';
-import DogalogueCard from '../components/DogalogueCard/DogalogueCard';
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const devDoggieTypes = [
     {
@@ -47,6 +60,10 @@ const AdoptionCenterPage = ( {
     , openToast
     , handleToastClose
     , toastMessage
+    , setToastType
+    , setToastMessage
+    , setOpenToast
+    , setPending
 } ) => {
     const classes = useStyles();
     const [ firstName, setFirstName ] = useState( '' );
@@ -59,7 +76,7 @@ const AdoptionCenterPage = ( {
         setDevDoggieTokenType( index );
     }
 
-    const handleAdoptionFee = () => {
+    const handleAdoptionFee = async () => {
         if ( 
             !firstName && !lastName 
             || !firstName
@@ -74,7 +91,25 @@ const AdoptionCenterPage = ( {
             , firstName
             , lastName
         }
-        adoptDevDoggie( params )
+        const result = await adoptDevDoggie( params );
+        if ( result ) {
+            console.log( 'result', result );
+            if ( result.events.DevDoggieAdopted ) {
+                setFirstName( '' );
+                setLastName( '' );
+                setToastType( 'success' );
+                setToastMessage( `Congratulations on your newly adopted DevDoggie, ${ firstName }`  );
+                setTimeout( () => {
+                    setOpenToast( true );
+                }, 1000);
+            }
+        } else {
+            setToastType( 'error' );
+                setToastMessage( 'We were unable to process your adoption. Please try again.' );
+                setTimeout( () => {
+                setOpenToast( true );
+            }, 1000);
+        }
     }
 
     return (
@@ -202,23 +237,97 @@ const AdoptionCenterPage = ( {
                                 <Grid
                                     item
                                 >
-                                    <Button
-                                        variant="contained"
-                                        className={ classes.primaryButton }
-                                        onClick={ handleAdoptionFee }
-                                        // disable={ error }
-                                        fullWidth
-                                    >
-                                        <p className={ classes.primaryButtonText }>
-                                            Pay Adoption Fee
-                                        </p>
-                                    </Button>
+                                    {
+                                        pending
+                                            ?
+                                            <Button
+                                                variant="contained"
+                                                classes={ {
+                                                    root: classes.disabledButton
+                                                } }
+                                                disabled={ true }
+                                                fullWidth
+                                            >
+                                                <Hearts 
+                                                    arialLabel="loading-indicator" 
+                                                    height="35"
+                                                    width="35"
+                                                    color={ colorfulSpace4 }
+                                                />
+                                                <p className={ classes.disabledButtonText }>
+                                                    Loading...
+                                                </p>
+                                            </Button>
+                                            :
+                                            <Button
+                                                variant="contained"
+                                                className={ classes.primaryButton }
+                                                onClick={ handleAdoptionFee }
+                                                // disable={ error }
+                                                fullWidth
+                                            >
+                                                <p className={ classes.primaryButtonText }>
+                                                    Pay Adoption Fee
+                                                </p>
+                                            </Button>
+                                    }
                                 </Grid>
                             </Grid>
                         </Grid>
                     </Grid>
                 </Grid>
             </Grid>
+            <Snackbar open={ openToast } autoHideDuration={6000} onClose={handleToastClose}>
+                {
+                    toastType === 'error'
+                        ?
+                        <Alert 
+                            onClose={ handleToastClose } 
+                            severity="error" 
+                            sx={{ width: '100%', color: spaceBlue4, fontWeight: 800 }}
+                        >
+                            <AlertTitle
+                                sx={{ color: spaceBlue4, fontWeight: 800 }}
+                            >
+                                Error
+                            </AlertTitle>
+                            { toastMessage }
+                        </Alert>
+                        : toastType === 'success'
+                            ?
+                            <Alert 
+                                onClose={ handleToastClose } 
+                                severity="success" 
+                                sx={{ width: '100%', color: spaceBlue4, fontWeight: 800 }}
+                            >
+                                <AlertTitle
+                                    sx={{ color: spaceBlue4, fontWeight: 800 }}
+                                >
+                                    Success
+                                </AlertTitle>
+                                {
+                                    toastMessage ? toastMessage : 'You are now connected to MetaMask!'
+                                }
+                            </Alert>
+                            : toastType === 'warning'
+                                ?
+                                <Alert 
+                                    onClose={ handleToastClose } 
+                                    severity="warning" 
+                                    sx={{ width: '100%', color: '#FFF', fontWeight: 800 }}
+                                >
+                                    <AlertTitle
+                                        sx={{ color: '#FFF', fontWeight: 800 }}
+                                    >
+                                        Warning
+                                    </AlertTitle>
+                                    {
+                                        toastMessage ? toastMessage : 'Warning'
+                                    }
+                                </Alert>
+                                : null
+                }
+            </Snackbar>
         </section>
     );
 };

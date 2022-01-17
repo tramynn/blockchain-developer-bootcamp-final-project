@@ -38,12 +38,15 @@ export default function useDevDoggieTokenContract() {
     const adoptDevDoggie = async ( params ) => {
         const { devDoggieType, firstName, lastName } = params;
         try {
-            const txHash = await contract.methods.adoptDevDoggie( devDoggieType
+            const tx = await contract.methods.adoptDevDoggie( devDoggieType
                 , firstName
                 , lastName
                 ).send( { from: account, value: library.utils.toWei(currentAdoptionFee, 'ether') } )
-            if ( txHash ) {
-                console.log( 'success!' );
+            if ( tx ) {
+                console.log( 'tx', tx );
+                return tx;
+            } else {
+                console.error( 'Error adopting a devdoggie.' )
             }
         } catch ( e ) {
             console.error( e )

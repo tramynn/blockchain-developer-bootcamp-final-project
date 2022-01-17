@@ -214,10 +214,14 @@ const App = () => {
                     element={ 
                         <AdoptionCenterPage 
                             pending={ pending }
+                            setPending={ setPending }
                             toastType={ toastType }
                             openToast={ openToast }
                             handleToastClose={ handleToastClose }
                             toastMessage={ toastMessage }
+                            setToastType={ setToastType }
+                            setToastMessage={ setToastMessage }
+                            setOpenToast={ setOpenToast }
                         /> 
                     } 
                 />
