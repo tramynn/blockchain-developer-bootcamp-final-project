@@ -152,6 +152,7 @@ contract DevDoggieToken is ERC721, ReentrancyGuard, Ownable {
                     myDevDoggies[currentIndex] = currentDevDoggie;
                     currentIndex += 1;
                 }
+            }
             return myDevDoggies;
         }
 
