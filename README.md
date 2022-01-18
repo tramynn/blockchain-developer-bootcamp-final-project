@@ -10,7 +10,6 @@ A decentralized platform (adoption center) where users can view and adopt DevDog
 
 ## Public Ethereum wallet for certification
 `0x020cD1e2C713ac6143B5f9D7423A07c89418a8E6`
-## Definitions
 
 ## Features
 1. User can login into DevDoggies via MetaMask
@@ -101,9 +100,15 @@ test
 truffle test
 ```
 
+## To create environment variables:
+- Create a `.env` file in the root directory and add the env vars below
+```javascript
+KOVAN_MNEMONIC=""
+INFURA_URL=
+```
 ## To build the application for production:
 - This will create a `client/build` folder
 ```javascript
 // Start in client directory
 npm run build
-```# blockchain-developer-bootcamp-final-project
+```
