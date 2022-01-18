@@ -152,22 +152,6 @@ contract DevDoggieToken is ERC721, ReentrancyGuard, Ownable {
                     myDevDoggies[currentIndex] = currentDevDoggie;
                     currentIndex += 1;
                 }
-            }
-            // return devDoggies;
-            // DevDoggie[] storage myDevDoggies;
-            // for (uint i = 0; i < totalDevDoggieCount; i++) {
-            //     if (adoptedDevDoggies[i + 1].owner == msg.sender) {
-            //         uint currentId = i + 1;
-            //         // DevDoggie storage currentDevDoggie = DevDoggie[currentId];
-            //         myDevDoggies.push(DevDoggie({
-            //             tokenId: adoptedDevDoggies[currentId].tokenId
-            //             , owner: adoptedDevDoggies[currentId].owner
-            //             , devDoggieType: adoptedDevDoggies[currentId].devDoggieType
-            //             , firstName: adoptedDevDoggies[currentId].firstName
-            //             , lastName: adoptedDevDoggies[currentId].lastName
-            //         }));
-            //     }
-            // }
             return myDevDoggies;
         }
 
