@@ -14,9 +14,8 @@ https://www.loom.com/share/b6ea6c89fd9e4a9598d66641c0205614
 
 ## Features
 1. User can login into DevDoggies via MetaMask
-2. User can view dogalogue of DevDoggies
-4. User can adopt a DevDoggie
-6. User can view their DevDoggies in their dashboard
+2. User can view 3 DevDoggie Types on the Adoption Center
+3. User can adopt a DevDoggie
 
 ## Workflow
 1. The user is directed to the landing page
@@ -38,8 +37,9 @@ https://www.loom.com/share/b6ea6c89fd9e4a9598d66641c0205614
       3. Paying the adoption fee
          - The user can click `pay adoption fee` button which prompts MetaMask to confirm the transaction
 7. Upon confirming the transaction:
-   1. On success, the user can click `go to my profile` button to view their devdoggies
-   2. On error, the user can click `try again` or `cancel`
+   1. On success, will show a success message!
+      - The user can check their transaction history in their wallet.
+   2. On error, will show an error message.
 
 ## Project Structure
 ```
