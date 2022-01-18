@@ -63,9 +63,9 @@ module.exports = {
     // NB: It's important to wrap the provider as a function.
     kovan: {
       provider: () => new HDWalletProvider(mnemonic, infuraUrl),
-      network_id: 42,       // Ropsten's id
-      gas: 4612388,
-      gasPrice: 100000000000,
+      network_id: 42,       // Kovan's id
+      gas: 5500000,
+      // gasPrice: 100000000000,
       confirmations: 2,    // # of confs to wait between deployments. (default: 0)
       timeoutBlocks: 200,  // # of blocks before a deployment times out  (minimum/default: 50)
       skipDryRun: true     // Skip dry run before migrations? (default: false for public nets )
